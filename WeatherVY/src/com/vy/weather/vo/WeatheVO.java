@@ -7,8 +7,13 @@ public class WeatheVO
 {
 	private String city;
 	private String data;
-	private Current_conditions current = new Current_conditions();
-	private List<Forecast_conditions> forecast = new ArrayList<Forecast_conditions>();
+	private String condition;
+	private int tempF;
+	private int tempC;
+	private String humidity;
+	private String icon;
+	private String windCondition;
+	private List<ForecastConditions> forecast = new ArrayList<ForecastConditions>();
 
 	public String getCity()
 	{
@@ -30,28 +35,78 @@ public class WeatheVO
 		this.data = data;
 	}
 
-	public Current_conditions getCurrent()
-	{
-		return current;
-	}
-
-	public void setCurrent(Current_conditions inCurrent)
-	{
-		this.current = inCurrent;
-	}
-
-	public List<Forecast_conditions> getForecast()
+	public List<ForecastConditions> getForecast()
 	{
 		return forecast;
 	}
 
-	public void setForecast(List<Forecast_conditions> inForecast)
+	public void setForecast(List<ForecastConditions> inForecast)
 	{
 		this.forecast = inForecast;
 	}
 
-	public void addForecast(Forecast_conditions inForecast)
+	public void addForecast(ForecastConditions inForecast)
 	{
 		forecast.add(inForecast);
+	}
+
+	public void setCondition(String inCondition)
+	{
+		this.condition = inCondition;
+	}
+
+	public String getCondition()
+	{
+		return this.condition;
+	}
+
+	public void setTempF(int inTemp_f)
+	{
+		this.tempF = inTemp_f;
+	}
+
+	public int getTempF()
+	{
+		return this.tempF;
+	}
+
+	public void setTempC(int inTemp_c)
+	{
+		this.tempF = inTemp_c;
+	}
+
+	public int getTempC()
+	{
+		return this.tempC;
+	}
+
+	public void setHumidity(String inHumidity)
+	{
+		this.humidity = inHumidity;
+	}
+
+	public String getHumidity()
+	{
+		return this.humidity;
+	}
+
+	public void setIcon(String inIcon)
+	{
+		this.icon = inIcon;
+	}
+
+	public String getIcon()
+	{
+		return this.icon;
+	}
+
+	public void setWindCondition(String inWind_condition)
+	{
+		this.windCondition = inWind_condition;
+	}
+
+	public String getWindCondition()
+	{
+		return this.windCondition;
 	}
 }

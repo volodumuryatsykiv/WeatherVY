@@ -1,10 +1,9 @@
 package com.vy.weather.vo;
 
-import com.vy.weather.interfaces.Conditions;
 
-public class Forecast_conditions extends Conditions
+public class ForecastConditions
 {
-	private String day_of_week;
+	private String dayOfWeek;
 	private int low;
 	private int high;
 	private String icon;
@@ -12,12 +11,12 @@ public class Forecast_conditions extends Conditions
 
 	public void setDayOfWeek(String inDay)
 	{
-		this.day_of_week = inDay;
+		this.dayOfWeek = inDay;
 	}
 
 	public String getDayOfWeek()
 	{
-		return this.day_of_week;
+		return this.dayOfWeek;
 	}
 
 	public int getLow()
@@ -40,25 +39,21 @@ public class Forecast_conditions extends Conditions
 		this.high = high;
 	}
 
-	@Override
 	public String getIcon()
 	{
 		return this.icon;
 	}
 
-	@Override
 	public void setIcon(String icon)
 	{
 		this.icon = icon;
 	}
 
-	@Override
 	public String getCondition()
 	{
 		return this.condition;
 	}
 
-	@Override
 	public void setCondition(String condition)
 	{
 		this.condition = condition;
