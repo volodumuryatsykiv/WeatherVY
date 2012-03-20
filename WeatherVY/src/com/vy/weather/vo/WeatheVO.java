@@ -1,12 +1,13 @@
 package com.vy.weather.vo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class WeatheVO
 {
 	private String city;
-	private String data;
+	private Date date = new Date();
 	private String condition;
 	private int tempF;
 	private int tempC;
@@ -25,14 +26,14 @@ public class WeatheVO
 		this.city = city;
 	}
 
-	public String getData()
+	public Date getYear()
 	{
-		return data;
+		return date;
 	}
 
-	public void setData(String data)
+	public void setData(int year, int month, int day)
 	{
-		this.data = data;
+		date = new Date(year, month, day);
 	}
 
 	public List<ForecastConditions> getForecast()
