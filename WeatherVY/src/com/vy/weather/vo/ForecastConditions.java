@@ -1,11 +1,10 @@
 package com.vy.weather.vo;
 
-
 public class ForecastConditions
 {
 	private String dayOfWeek;
-	private int low;
-	private int high;
+	private float low;
+	private float high;
 	private String icon;
 	private String condition;
 
@@ -19,22 +18,22 @@ public class ForecastConditions
 		return this.dayOfWeek;
 	}
 
-	public int getLow()
+	public float getLow()
 	{
 		return this.low;
 	}
 
-	public void setLow(int low)
+	public void setLow(float low)
 	{
 		this.low = low;
 	}
 
-	public int getHigh()
+	public float getHigh()
 	{
 		return this.high;
 	}
 
-	public void setHigh(int high)
+	public void setHigh(float high)
 	{
 		this.high = high;
 	}

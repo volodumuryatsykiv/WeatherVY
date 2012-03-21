@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WeatheVO
+public class WeatherVO
 {
 	private String city;
 	private Date date = new Date();
 	private String condition;
-	private int tempF;
-	private int tempC;
+	private float tempF;
+	private float tempC;
 	private String humidity;
 	private String icon;
 	private String windCondition;
@@ -41,7 +41,7 @@ public class WeatheVO
 		return forecast;
 	}
 
-	public void setForecast(List<ForecastConditions> inForecast)
+	public void setForecastList(List<ForecastConditions> inForecast)
 	{
 		this.forecast = inForecast;
 	}
@@ -61,22 +61,22 @@ public class WeatheVO
 		return this.condition;
 	}
 
-	public void setTempF(int inTemp_f)
+	public void setTempF(float inTempF)
 	{
-		this.tempF = inTemp_f;
+		this.tempF = inTempF;
 	}
 
-	public int getTempF()
+	public float getTempF()
 	{
 		return this.tempF;
 	}
 
-	public void setTempC(int inTemp_c)
+	public void setTempC(float inTempC)
 	{
-		this.tempF = inTemp_c;
+		this.tempF = inTempC;
 	}
 
-	public int getTempC()
+	public float getTempC()
 	{
 		return this.tempC;
 	}
