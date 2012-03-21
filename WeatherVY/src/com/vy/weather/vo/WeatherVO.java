@@ -26,14 +26,14 @@ public class WeatherVO
 		this.city = city;
 	}
 
-	public Date getYear()
+	public Date getDate()
 	{
 		return date;
 	}
 
-	public void setData(int year, int month, int day)
+	public void setDate(Date inDate)
 	{
-		date = new Date(year, month, day);
+		date = inDate;
 	}
 
 	public List<ForecastConditions> getForecast()

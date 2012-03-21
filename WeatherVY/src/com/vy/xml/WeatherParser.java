@@ -1,6 +1,10 @@
 package com.vy.xml;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -17,6 +21,9 @@ public class WeatherParser extends DefaultHandler2
 	private final List<ForecastConditions> forecastList = new ArrayList<ForecastConditions>();
 	private String thisString = "";
 	private int currentLevel = -1;
+	private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private Date tDate = new Date();
+	private final NumberFormat format = NumberFormat.getInstance();
 
 	public WeatherVO getWeatherVO()
 	{
@@ -77,18 +84,37 @@ public class WeatherParser extends DefaultHandler2
 			weather.setCity(value);
 		} else if (inQname.equalsIgnoreCase("forecast_date"))
 		{
-			weather.setData(Integer.valueOf(value.substring(0, 4)),
-					Integer.valueOf(value.substring(5, 7)),
-					Integer.valueOf(value.substring(8, 10)));
+			try
+			{
+				tDate = sdFormat.parse(value);
+				weather.setDate(tDate);
+			} catch (ParseException e)
+			{
+				e.printStackTrace();
+			}
 		} else if (inQname.equalsIgnoreCase("condition"))
 		{
 			weather.setCondition(value);
 		} else if (inQname.equalsIgnoreCase("temp_f"))
 		{
-			weather.setTempF(Float.valueOf(value));
+			try
+			{
+				Number inValue = format.parse(value);
+				weather.setTempF(inValue.floatValue());
+			} catch (ParseException e)
+			{
+				System.err.println(value + " not parseable");
+			}
 		} else if (inQname.equalsIgnoreCase("temp_c"))
 		{
-			weather.setTempC(Float.valueOf(value));
+			try
+			{
+				Number inValue = format.parse(value);
+				weather.setTempC(inValue.floatValue());
+			} catch (ParseException e)
+			{
+				System.err.println(value + " not parseable");
+			}
 		} else if (inQname.equalsIgnoreCase("humidity"))
 		{
 			weather.setHumidity(value);
@@ -108,10 +134,24 @@ public class WeatherParser extends DefaultHandler2
 			forecast.setDayOfWeek(value);
 		} else if (inQname.equalsIgnoreCase("low"))
 		{
-			forecast.setLow(Float.valueOf(value));
+			try
+			{
+				Number inValue = format.parse(value);
+				forecast.setLow(inValue.floatValue());
+			} catch (ParseException e)
+			{
+				System.err.println(value + " not parseable");
+			}
 		} else if (inQname.equalsIgnoreCase("high"))
 		{
-			forecast.setHigh(Float.valueOf(value));
+			try
+			{
+				Number inValue = format.parse(value);
+				forecast.setHigh(inValue.floatValue());
+			} catch (ParseException e)
+			{
+				System.err.println(value + " not parseable");
+			}
 		} else if (inQname.equalsIgnoreCase("icon"))
 		{
 			forecast.setIcon(value);
