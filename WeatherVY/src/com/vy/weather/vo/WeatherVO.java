@@ -18,17 +18,17 @@ public class WeatherVO
 
 	public String getCity()
 	{
-		return city;
+		return this.city;
 	}
 
-	public void setCity(String city)
+	public void setCity(String inCity)
 	{
-		this.city = city;
+		this.city = inCity;
 	}
 
 	public Date getDate()
 	{
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date inDate)

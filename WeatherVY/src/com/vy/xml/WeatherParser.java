@@ -1,6 +1,5 @@
 package com.vy.xml;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
+import com.vy.utils.NumberUtils;
 import com.vy.weather.vo.ForecastConditions;
 import com.vy.weather.vo.WeatherVO;
 
@@ -21,9 +21,9 @@ public class WeatherParser extends DefaultHandler2
 	private final List<ForecastConditions> forecastList = new ArrayList<ForecastConditions>();
 	private String thisString = "";
 	private int currentLevel = -1;
+	private final int forecastInformation = 1;
+	private final int currentInformation = 0;
 	private final SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private Date tDate = new Date();
-	private final NumberFormat format = NumberFormat.getInstance();
 
 	public WeatherVO getWeatherVO()
 	{
@@ -41,23 +41,24 @@ public class WeatherParser extends DefaultHandler2
 	{
 		thisString = qName;
 		String value = "";
-		// System.out.println(value);
 
-		if (thisString.equalsIgnoreCase("forecast_information")
-				|| thisString.equalsIgnoreCase("current_conditions"))
+		if (thisString.equalsIgnoreCase(XMLconstants.forecastInformation)
+				|| thisString.equalsIgnoreCase(XMLconstants.currentCondition))
 		{
-			currentLevel = 0;
-		} else if (thisString.equalsIgnoreCase("forecast_conditions"))
+			currentLevel = currentInformation;
+		} else if (thisString.equalsIgnoreCase(XMLconstants.forecastCondition))
 		{
-			currentLevel = 1;
+			currentLevel = forecastInformation;
 		}
 
-		value = attributes.getValue("data");
-		if (currentLevel == 0 && value != null && !value.isEmpty())
+		value = attributes.getValue(XMLconstants.data);
+		if (currentLevel == currentInformation && value != null
+				&& !value.isEmpty())
 		{
 
 			parseWeatherVO(thisString, value.trim());
-		} else if (currentLevel == 1 && value != null && !value.isEmpty())
+		} else if (currentLevel == forecastInformation && value != null
+				&& !value.isEmpty())
 		{
 			parseForecastCondition(thisString, value.trim());
 		}
@@ -79,10 +80,11 @@ public class WeatherParser extends DefaultHandler2
 
 	public void parseWeatherVO(String inQname, String value)
 	{
-		if (inQname.equalsIgnoreCase("city"))
+		Date tDate = new Date();
+		if (inQname.equalsIgnoreCase(XMLconstants.city))
 		{
 			weather.setCity(value);
-		} else if (inQname.equalsIgnoreCase("forecast_date"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.date))
 		{
 			try
 			{
@@ -92,36 +94,22 @@ public class WeatherParser extends DefaultHandler2
 			{
 				e.printStackTrace();
 			}
-		} else if (inQname.equalsIgnoreCase("condition"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.condition))
 		{
 			weather.setCondition(value);
-		} else if (inQname.equalsIgnoreCase("temp_f"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.tempF))
 		{
-			try
-			{
-				Number inValue = format.parse(value);
-				weather.setTempF(inValue.floatValue());
-			} catch (ParseException e)
-			{
-				System.err.println(value + " not parseable");
-			}
-		} else if (inQname.equalsIgnoreCase("temp_c"))
+			weather.setTempF(NumberUtils.parseNumber(value));
+		} else if (inQname.equalsIgnoreCase(XMLconstants.tempC))
 		{
-			try
-			{
-				Number inValue = format.parse(value);
-				weather.setTempC(inValue.floatValue());
-			} catch (ParseException e)
-			{
-				System.err.println(value + " not parseable");
-			}
-		} else if (inQname.equalsIgnoreCase("humidity"))
+			weather.setTempC(NumberUtils.parseNumber(value));
+		} else if (inQname.equalsIgnoreCase(XMLconstants.humidity))
 		{
 			weather.setHumidity(value);
-		} else if (inQname.equalsIgnoreCase("icon"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.icon))
 		{
 			weather.setIcon(value);
-		} else if (inQname.equalsIgnoreCase("wind_condition"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.windCondition))
 		{
 			weather.setWindCondition(value);
 		}
@@ -129,33 +117,19 @@ public class WeatherParser extends DefaultHandler2
 
 	public void parseForecastCondition(String inQname, String value)
 	{
-		if (inQname.equalsIgnoreCase("day_of_week"))
+		if (inQname.equalsIgnoreCase(XMLconstants.dayOfWeek))
 		{
 			forecast.setDayOfWeek(value);
-		} else if (inQname.equalsIgnoreCase("low"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.low))
 		{
-			try
-			{
-				Number inValue = format.parse(value);
-				forecast.setLow(inValue.floatValue());
-			} catch (ParseException e)
-			{
-				System.err.println(value + " not parseable");
-			}
-		} else if (inQname.equalsIgnoreCase("high"))
+			forecast.setLow(NumberUtils.parseNumber(value));
+		} else if (inQname.equalsIgnoreCase(XMLconstants.high))
 		{
-			try
-			{
-				Number inValue = format.parse(value);
-				forecast.setHigh(inValue.floatValue());
-			} catch (ParseException e)
-			{
-				System.err.println(value + " not parseable");
-			}
-		} else if (inQname.equalsIgnoreCase("icon"))
+			forecast.setHigh(NumberUtils.parseNumber(value));
+		} else if (inQname.equalsIgnoreCase(XMLconstants.icon))
 		{
 			forecast.setIcon(value);
-		} else if (inQname.equalsIgnoreCase("condition"))
+		} else if (inQname.equalsIgnoreCase(XMLconstants.condition))
 		{
 			forecast.setCondition(value);
 		}
